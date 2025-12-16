@@ -3,25 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Devarsons - WebGL Premium Experience</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+    <title>India Healthcare Compliance - WebGL Premium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-    --black: #000000;
-    --gold: #D4AF37;
-    --gold-light: #F4E4C1;
-    --white: #FFFFFF;
+    --primary: #FF6B35;
+    --secondary: #4ECDC4;
+    --accent: #FFE66D;
+    --dark: #0A0E27;
+    --light: #F7F7FF;
 }
 
 html { scroll-behavior: smooth; }
 
 body {
-    font-family: 'Montserrat', sans-serif;
-    background: var(--black);
-    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    background: var(--dark);
+    color: var(--light);
     overflow-x: hidden;
 }
 
@@ -30,9 +31,7 @@ body.intro-locked {
     height: 100vh;
 }
 
-/* ========================================
-   WEBGL SHADER CANVAS
-======================================== */
+/* WEBGL CANVAS */
 #webgl-canvas {
     position: fixed;
     top: 0;
@@ -44,14 +43,13 @@ body.intro-locked {
 
 #webgl-canvas.exiting {
     animation: fadeOutGlow 2.5s ease-out forwards;
-    pointer-events: none;
 }
 
 @keyframes fadeOutGlow {
     to { opacity: 0; filter: blur(20px); visibility: hidden; }
 }
 
-/* TEXT OVERLAY WITH GLOW */
+/* INTRO OVERLAY */
 .intro-overlay {
     position: fixed;
     top: 0;
@@ -65,42 +63,39 @@ body.intro-locked {
     pointer-events: none;
 }
 
-.intro-content {
+.intro-text {
     text-align: center;
 }
 
-.intro-word-webgl {
+.intro-word {
+    font-family: 'Space Grotesk', sans-serif;
     font-size: clamp(4.5rem, 11vw, 12rem);
     font-weight: 900;
     letter-spacing: -0.01em;
     opacity: 0;
     line-height: 0.95;
     margin: 1.8rem 0;
-    filter: drop-shadow(0 0 60px rgba(212, 175, 55, 0.8));
+    filter: drop-shadow(0 0 60px rgba(78, 205, 196, 0.8));
 }
 
-.intro-word-webgl:nth-child(1) {
+.intro-word:nth-child(1) {
     animation: liquidEmerge 2s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
-    color: var(--white);
+    color: var(--primary);
 }
 
-.intro-word-webgl:nth-child(2) {
+.intro-word:nth-child(2) {
     animation: liquidEmerge 2s cubic-bezier(0.16, 1, 0.3, 1) 2s forwards;
-    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--secondary);
 }
 
-.intro-word-webgl:nth-child(3) {
+.intro-word:nth-child(3) {
     animation: liquidEmerge 2s cubic-bezier(0.16, 1, 0.3, 1) 3.2s forwards;
-    color: var(--white);
+    color: var(--accent);
 }
 
-.intro-word-webgl:nth-child(4) {
+.intro-word:nth-child(4) {
     animation: liquidEmerge 2s cubic-bezier(0.16, 1, 0.3, 1) 4.4s forwards;
-    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--light);
     font-size: clamp(5.5rem, 13vw, 14rem);
 }
 
@@ -108,243 +103,116 @@ body.intro-locked {
     from {
         opacity: 0;
         transform: scale(0.6) translateY(60px);
-        filter: blur(15px) drop-shadow(0 0 80px rgba(212, 175, 55, 1));
+        filter: blur(15px) drop-shadow(0 0 80px rgba(78, 205, 196, 1));
     }
     to {
         opacity: 1;
         transform: scale(1) translateY(0);
-        filter: blur(0) drop-shadow(0 0 60px rgba(212, 175, 55, 0.8));
+        filter: blur(0) drop-shadow(0 0 60px rgba(78, 205, 196, 0.8));
     }
 }
 
-.intro-brand-webgl {
+.intro-brand {
     opacity: 0;
     margin-top: 7rem;
-    transform: translateY(50px);
 }
 
-.intro-brand-webgl.active {
+.intro-brand.active {
     animation: glowFadeIn 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes glowFadeIn {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-.brand-name-webgl {
-    font-family: 'Playfair Display', serif;
+.brand-title {
+    font-family: 'Space Grotesk', sans-serif;
     font-size: clamp(3.5rem, 8vw, 7.5rem);
     font-weight: 700;
-    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-light) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--light);
     margin-bottom: 2rem;
-    letter-spacing: 0.1em;
-    filter: drop-shadow(0 0 80px rgba(212, 175, 55, 0.9));
+    letter-spacing: -0.02em;
+    filter: drop-shadow(0 0 80px rgba(78, 205, 196, 0.9));
     animation: shimmer 3s infinite ease-in-out;
 }
 
 @keyframes shimmer {
-    0%, 100% { filter: drop-shadow(0 0 80px rgba(212, 175, 55, 0.9)) brightness(1); }
-    50% { filter: drop-shadow(0 0 120px rgba(212, 175, 55, 1)) brightness(1.2); }
+    0%, 100% { filter: drop-shadow(0 0 80px rgba(78, 205, 196, 0.9)) brightness(1); }
+    50% { filter: drop-shadow(0 0 120px rgba(78, 205, 196, 1)) brightness(1.2); }
 }
 
-.tagline-webgl {
+.brand-subtitle {
     font-size: clamp(1.4rem, 3.2vw, 2.6rem);
-    color: var(--gold);
-    font-style: italic;
-    letter-spacing: 0.35em;
-    margin-bottom: 2rem;
-    filter: drop-shadow(0 0 40px rgba(212, 175, 55, 0.6));
-}
-
-.heritage-webgl {
-    font-size: clamp(1.3rem, 2.6vw, 2.2rem);
-    color: rgba(255, 255, 255, 0.95);
-    letter-spacing: 0.6em;
-    font-weight: 700;
-    filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.5));
+    color: var(--secondary);
+    letter-spacing: 0.1em;
+    filter: drop-shadow(0 0 40px rgba(78, 205, 196, 0.6));
 }
 
 .intro-overlay.exiting {
     animation: fadeOutGlow 2.5s ease-out forwards;
 }
 
-/* ========================================
-   MOLECULAR CORE
-======================================== */
-.molecular-core {
+/* HEADER */
+header {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    z-index: 0;
-    pointer-events: none;
+    background: rgba(10, 14, 39, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(78, 205, 196, 0.2);
+    z-index: 1000;
     opacity: 0;
+    padding: 1.5rem 5%;
 }
 
-.molecular-core.active {
-    animation: fadeIn 3s ease-out forwards;
+header.visible {
+    animation: fadeIn 2s ease-out 2s forwards;
 }
 
 @keyframes fadeIn { to { opacity: 1; } }
 
-.central-atom {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 220px;
-    height: 220px;
-    background: radial-gradient(circle, var(--gold) 0%, rgba(212, 175, 55, 0.4) 60%, transparent 100%);
-    border-radius: 50%;
+.header-content {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    font-size: 4.5rem;
-    font-weight: 900;
-    color: var(--black);
-    box-shadow: 0 0 100px rgba(212, 175, 55, 1), 0 0 200px rgba(212, 175, 55, 0.6), 0 0 300px rgba(212, 175, 55, 0.3);
-    animation: atomPulse 5s infinite ease-in-out;
-    z-index: 1;
-    opacity: 0;
+    max-width: 1800px;
+    margin: 0 auto;
 }
 
-.central-atom.visible {
-    animation: atomPulse 5s infinite ease-in-out, fadeIn 2.5s ease-out forwards;
+.logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--light);
+    filter: drop-shadow(0 0 20px rgba(78, 205, 196, 0.5));
 }
 
-@keyframes atomPulse {
-    0%, 100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 100px rgba(212, 175, 55, 1), 0 0 200px rgba(212, 175, 55, 0.6); }
-    50% { transform: translate(-50%, -50%) scale(1.15); box-shadow: 0 0 150px rgba(212, 175, 55, 1), 0 0 300px rgba(212, 175, 55, 0.8); }
+nav ul {
+    display: flex;
+    gap: 3rem;
+    list-style: none;
 }
 
-.molecule-orbit {
-    position: absolute;
-    width: 24px;
-    height: 24px;
-    background: var(--gold);
-    border-radius: 50%;
-    box-shadow: 0 0 50px rgba(212, 175, 55, 1), 0 0 100px rgba(212, 175, 55, 0.6);
-}
-
-.orbit-1 { animation: orbit1 22s linear infinite; }
-.orbit-2 { animation: orbit2 28s linear infinite; }
-.orbit-3 { animation: orbit3 34s linear infinite; }
-.orbit-4 { animation: orbit4 25s linear infinite; }
-.orbit-5 { animation: orbit5 31s linear infinite; }
-
-@keyframes orbit1 {
-    from { transform: rotate(0deg) translateX(320px) rotate(0deg); }
-    to { transform: rotate(360deg) translateX(320px) rotate(-360deg); }
-}
-
-@keyframes orbit2 {
-    from { transform: rotate(0deg) translateX(480px) rotate(0deg); }
-    to { transform: rotate(360deg) translateX(480px) rotate(-360deg); }
-}
-
-@keyframes orbit3 {
-    from { transform: rotate(0deg) translateX(640px) rotate(0deg); }
-    to { transform: rotate(360deg) translateX(640px) rotate(-360deg); }
-}
-
-@keyframes orbit4 {
-    from { transform: rotate(0deg) translateX(380px) rotate(0deg); }
-    to { transform: rotate(360deg) translateX(380px) rotate(-360deg); }
-}
-
-@keyframes orbit5 {
-    from { transform: rotate(0deg) translateX(540px) rotate(0deg); }
-    to { transform: rotate(360deg) translateX(540px) rotate(-360deg); }
-}
-
-/* ========================================
-   NAVIGATION
-======================================== */
-.molecular-nav {
-    position: fixed;
-    top: 50%;
-    right: 5%;
-    transform: translateY(-50%);
-    z-index: 1000;
-    opacity: 0;
-}
-
-.molecular-nav.visible {
-    animation: fadeIn 2s ease-out 2s forwards;
-}
-
-.nav-molecule {
-    width: 18px;
-    height: 18px;
-    background: rgba(212, 175, 55, 0.5);
-    border: 3px solid var(--gold);
-    border-radius: 50%;
-    margin: 3.5rem 0;
-    cursor: pointer;
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    position: relative;
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
-}
-
-.nav-molecule:hover,
-.nav-molecule.active {
-    background: var(--gold);
-    box-shadow: 0 0 40px rgba(212, 175, 55, 1), 0 0 80px rgba(212, 175, 55, 0.6);
-    transform: scale(2);
-}
-
-.nav-label {
-    position: absolute;
-    right: 3.5rem;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 0.85rem;
-    color: var(--gold);
-    opacity: 0;
-    transition: opacity 0.4s;
-    white-space: nowrap;
+nav a {
+    color: var(--light);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.18em;
-    font-weight: 800;
-    text-shadow: 0 0 20px rgba(212, 175, 55, 0.8);
+    letter-spacing: 0.1em;
+    transition: all 0.3s;
 }
 
-.nav-molecule:hover .nav-label {
-    opacity: 1;
+nav a:hover {
+    color: var(--secondary);
+    text-shadow: 0 0 20px rgba(78, 205, 196, 0.8);
 }
 
-/* ========================================
-   HEADER
-======================================== */
-.minimal-logo {
-    position: fixed;
-    top: 3rem;
-    left: 5%;
-    z-index: 1000;
-    opacity: 0;
-}
-
-.minimal-logo.visible {
-    animation: fadeIn 2s ease-out 2s forwards;
-}
-
-.logo-img {
-    height: 60px;
-    filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.5));
-}
-
-/* ========================================
-   MAIN CONTENT
-======================================== */
+/* MAIN */
 main {
     position: relative;
-    z-index: 2;
+    z-index: 1;
     opacity: 0;
     padding-top: 100vh;
 }
@@ -353,471 +221,423 @@ main.visible {
     animation: fadeIn 2.5s ease-out forwards;
 }
 
-.molecular-section {
+/* HERO */
+.hero {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 10rem 5%;
-    position: relative;
+    text-align: center;
 }
 
-.heritage-atom {
-    text-align: center;
+.hero-content {
     max-width: 1500px;
 }
 
-.atom-year {
-    font-size: clamp(20rem, 38vw, 32rem);
+.hero-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(4rem, 9vw, 8rem);
     font-weight: 900;
-    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-light) 100%);
+    line-height: 1.1;
+    margin-bottom: 3rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    line-height: 0.7;
-    margin-bottom: 5rem;
-    filter: drop-shadow(0 0 80px rgba(212, 175, 55, 0.8));
+    filter: drop-shadow(0 0 60px rgba(78, 205, 196, 0.7));
     animation: shimmer 4s infinite ease-in-out;
 }
 
-.atom-statement {
-    font-size: clamp(2.8rem, 5.5vw, 5rem);
-    font-weight: 300;
-    color: rgba(255, 255, 255, 0.98);
-    line-height: 1.3;
-    margin-bottom: 3.5rem;
-    text-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
-}
-
-.atom-emphasis {
-    font-size: clamp(3.5rem, 6.5vw, 6rem);
-    font-weight: 900;
-    color: var(--white);
-    text-shadow: 0 0 50px rgba(255, 255, 255, 0.4);
-}
-
-.quote-molecule {
-    min-height: 95vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 10rem 5%;
-}
-
-.quote-text {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: clamp(2.8rem, 6.5vw, 6rem);
-    line-height: 1.2;
-    color: var(--white);
-    max-width: 1400px;
-    margin: 0 auto 3.5rem;
-    position: relative;
-    text-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
-}
-
-.quote-text::before {
-    content: '"';
-    position: absolute;
-    top: -6rem;
-    left: -3.5rem;
-    font-size: 24rem;
-    color: var(--gold);
-    opacity: 0.05;
-    font-family: Georgia;
-}
-
-.quote-author {
-    font-size: 1.8rem;
-    color: var(--gold);
-    font-weight: 700;
-    font-style: normal;
-    text-shadow: 0 0 30px rgba(212, 175, 55, 0.6);
-}
-
-.content-molecule {
-    max-width: 1700px;
-    margin: 0 auto;
-    padding: 12rem 5%;
-}
-
-.molecule-title {
-    font-size: clamp(4.5rem, 9vw, 8rem);
-    font-weight: 900;
-    margin-bottom: 6rem;
-    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-light) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    line-height: 0.9;
-    text-align: center;
-    filter: drop-shadow(0 0 60px rgba(212, 175, 55, 0.7));
-    animation: shimmer 4s infinite ease-in-out;
-}
-
-.molecule-text {
-    font-size: 1.8rem;
-    line-height: 2.3;
-    color: rgba(255, 255, 255, 0.9);
-    max-width: 1400px;
-    margin: 0 auto 3.5rem;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-}
-
-.molecule-text strong {
-    color: var(--gold);
-    font-weight: 700;
-    text-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
-}
-
-.industry-molecules {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 3rem;
-    margin-top: 7rem;
-}
-
-.industry-molecule {
-    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);
-    border: 2px solid rgba(212, 175, 55, 0.4);
-    padding: 4.5rem 3rem;
-    cursor: pointer;
-    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 0 30px rgba(212, 175, 55, 0.1);
-}
-
-.industry-molecule::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
-    opacity: 0;
-    transition: all 0.8s;
-    transform: translate(-50%, -50%);
-}
-
-.industry-molecule:hover::before {
-    width: 400%;
-    height: 400%;
-    opacity: 0.2;
-}
-
-.industry-molecule:hover {
-    border-color: var(--gold);
-    transform: translateY(-20px);
-    box-shadow: 0 30px 100px rgba(212, 175, 55, 0.4), 0 0 60px rgba(212, 175, 55, 0.3);
-}
-
-.industry-molecule:nth-child(1) { grid-column: 1 / 5; }
-.industry-molecule:nth-child(2) { grid-column: 5 / 9; }
-.industry-molecule:nth-child(3) { grid-column: 9 / 13; }
-.industry-molecule:nth-child(4) { grid-column: 1 / 7; }
-.industry-molecule:nth-child(5) { grid-column: 7 / 13; }
-.industry-molecule:nth-child(6) { grid-column: 1 / 5; }
-.industry-molecule:nth-child(7) { grid-column: 5 / 9; }
-.industry-molecule:nth-child(8) { grid-column: 9 / 13; }
-
-.industry-icon {
-    font-size: 4.5rem;
-    margin-bottom: 2.5rem;
-    display: block;
-    filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.4));
-}
-
-.industry-name {
-    font-size: 2.4rem;
-    font-weight: 900;
-    margin-bottom: 1.8rem;
-    color: var(--gold);
-    text-transform: uppercase;
-    text-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
-}
-
-.industry-desc {
-    font-size: 1.2rem;
-    line-height: 1.9;
-    color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 1.8rem;
-}
-
-.industry-details {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.7s ease;
-    margin-top: 2.5rem;
-    padding-top: 2.5rem;
-    border-top: 1px solid rgba(212, 175, 55, 0.4);
-    font-size: 1.05rem;
-    color: rgba(255, 255, 255, 0.7);
-    line-height: 2;
-}
-
-.industry-molecule:hover .industry-details {
-    max-height: 500px;
-}
-
-.cta-molecule {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, var(--black) 100%);
-    border-top: 6px solid var(--gold);
-    border-bottom: 6px solid var(--gold);
-    padding: 10rem 5%;
-    box-shadow: inset 0 0 100px rgba(212, 175, 55, 0.2);
-}
-
-.cta-title {
-    font-size: clamp(7rem, 16vw, 15rem);
-    font-weight: 900;
-    margin-bottom: 6rem;
-    line-height: 0.85;
-    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-light) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 80px rgba(212, 175, 55, 0.8));
-    animation: shimmer 4s infinite ease-in-out;
-}
-
-.cta-text {
-    font-size: 2rem;
-    color: rgba(255, 255, 255, 0.85);
-    margin-bottom: 5rem;
-    max-width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.9;
+.hero-subtitle {
+    font-size: clamp(1.5rem, 2.8vw, 2.3rem);
+    color: rgba(247, 247, 255, 0.9);
+    margin-bottom: 4rem;
+    line-height: 1.7;
     text-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
 }
 
-.btn-molecule {
-    padding: 3rem 7rem;
-    font-size: 1.7rem;
-    font-weight: 900;
+.cta-button {
+    padding: 2rem 5rem;
+    font-size: 1.4rem;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.25em;
+    letter-spacing: 0.15em;
     border: none;
+    background: var(--primary);
+    color: var(--light);
     cursor: pointer;
-    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    background: var(--gold);
-    color: var(--black);
-    box-shadow: 0 0 60px rgba(212, 175, 55, 0.6);
+    transition: all 0.5s;
+    box-shadow: 0 0 60px rgba(255, 107, 53, 0.6);
 }
 
-.btn-molecule:hover {
-    background: var(--gold-light);
-    transform: translateY(-12px);
-    box-shadow: 0 40px 120px rgba(212, 175, 55, 0.8), 0 0 100px rgba(212, 175, 55, 0.6);
+.cta-button:hover {
+    background: var(--secondary);
+    transform: translateY(-8px);
+    box-shadow: 0 30px 100px rgba(78, 205, 196, 0.8);
+}
+
+/* ACTS SECTION */
+.acts-section {
+    padding: 10rem 5%;
+    max-width: 1800px;
+    margin: 0 auto;
+}
+
+.section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(3.5rem, 7vw, 6rem);
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 6rem;
+    color: var(--light);
+    filter: drop-shadow(0 0 60px rgba(78, 205, 196, 0.7));
+    animation: shimmer 4s infinite ease-in-out;
+}
+
+.acts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 3.5rem;
+}
+
+.act-card {
+    background: rgba(78, 205, 196, 0.08);
+    border: 2px solid rgba(78, 205, 196, 0.3);
+    padding: 4rem 3rem;
+    transition: all 0.6s;
+    cursor: pointer;
+    box-shadow: 0 0 30px rgba(78, 205, 196, 0.1);
+}
+
+.act-card:hover {
+    border-color: var(--secondary);
+    transform: translateY(-15px);
+    box-shadow: 0 30px 100px rgba(78, 205, 196, 0.4);
+    background: rgba(78, 205, 196, 0.12);
+}
+
+.act-icon {
+    font-size: 4rem;
+    margin-bottom: 2rem;
+    filter: drop-shadow(0 0 20px rgba(78, 205, 196, 0.4));
+}
+
+.act-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--secondary);
+    margin-bottom: 2rem;
+    text-shadow: 0 0 30px rgba(78, 205, 196, 0.5);
+}
+
+.act-items {
+    list-style: none;
+}
+
+.act-items li {
+    padding: 1rem 0;
+    padding-left: 2.5rem;
+    position: relative;
+    color: rgba(247, 247, 255, 0.85);
+    font-size: 1.05rem;
+}
+
+.act-items li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--secondary);
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+/* TIMELINE */
+.timeline-section {
+    padding: 10rem 5%;
+    max-width: 1700px;
+    margin: 0 auto;
+}
+
+.timeline {
+    position: relative;
+    padding: 3rem 0;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+    transform: translateX(-50%);
+    box-shadow: 0 0 20px rgba(78, 205, 196, 0.5);
+}
+
+.timeline-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    margin-bottom: 5rem;
+    position: relative;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 2.5rem;
+    width: 24px;
+    height: 24px;
+    background: var(--secondary);
+    border-radius: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 40px rgba(78, 205, 196, 1), 0 0 80px rgba(78, 205, 196, 0.6);
+    z-index: 2;
+}
+
+.timeline-content {
+    background: rgba(78, 205, 196, 0.08);
+    border-left: 5px solid var(--secondary);
+    padding: 3rem;
+    box-shadow: 0 0 40px rgba(78, 205, 196, 0.2);
+}
+
+.week-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--secondary);
+    margin-bottom: 1.5rem;
+    text-shadow: 0 0 30px rgba(78, 205, 196, 0.6);
+}
+
+.week-desc {
+    color: rgba(247, 247, 255, 0.85);
+    line-height: 2;
+    font-size: 1.1rem;
 }
 
 footer {
-    padding: 7rem 5%;
+    padding: 5rem 5%;
     text-align: center;
-    border-top: 1px solid rgba(212, 175, 55, 0.4);
+    border-top: 1px solid rgba(78, 205, 196, 0.3);
+    color: rgba(247, 247, 255, 0.7);
 }
 
-@media (max-width: 1200px) {
-    .industry-molecules { grid-template-columns: 1fr; }
-    .industry-molecule { grid-column: 1 / -1 !important; }
-    .central-atom { width: 170px; height: 170px; font-size: 3.5rem; }
-}
-
-@media (max-width: 768px) {
-    .minimal-logo { left: 3%; top: 2rem; }
-    .molecular-nav { right: 3%; }
-    .molecular-section { padding: 7rem 4%; }
-    .content-molecule { padding: 7rem 4%; }
+@media (max-width: 1024px) {
+    .acts-grid { grid-template-columns: 1fr; }
+    .timeline-item { grid-template-columns: 1fr; }
+    .timeline::before { left: 0; }
+    .timeline-item::before { left: 0; }
 }
     </style>
 </head>
 <body class="intro-locked">
-    <!-- WEBGL SHADER CANVAS -->
+    <!-- WEBGL CANVAS -->
     <canvas id="webgl-canvas"></canvas>
 
-    <!-- TEXT OVERLAY -->
+    <!-- INTRO OVERLAY -->
     <div class="intro-overlay" id="overlay">
-        <div class="intro-content">
-            <div class="intro-word-webgl">BREAK THE</div>
-            <div class="intro-word-webgl">SHACKLES</div>
-            <div class="intro-word-webgl">CHALLENGE</div>
-            <div class="intro-word-webgl">BARRIERS</div>
+        <div class="intro-text">
+            <div class="intro-word">HEALTHCARE</div>
+            <div class="intro-word">COMPLIANCE</div>
+            <div class="intro-word">MADE</div>
+            <div class="intro-word">SIMPLE</div>
             
-            <div class="intro-brand-webgl">
-                <div class="brand-name-webgl">devarsons</div>
-                <div class="tagline-webgl">The Colour Solution Company</div>
-                <div class="heritage-webgl">SINCE 1923</div>
+            <div class="intro-brand">
+                <div class="brand-title">India Healthcare Compliance</div>
+                <div class="brand-subtitle">Complete Implementation Roadmap</div>
             </div>
         </div>
     </div>
 
-    <!-- MOLECULAR CORE -->
-    <div class="molecular-core" id="molecular-core">
-        <div class="central-atom" id="central-atom">1923</div>
-        <div class="molecule-orbit orbit-1"></div>
-        <div class="molecule-orbit orbit-2"></div>
-        <div class="molecule-orbit orbit-3"></div>
-        <div class="molecule-orbit orbit-4"></div>
-        <div class="molecule-orbit orbit-5"></div>
-    </div>
+    <!-- HEADER -->
+    <header id="header">
+        <div class="header-content">
+            <div class="logo">IN Healthcare</div>
+            <nav>
+                <ul>
+                    <li><a href="#acts">Acts</a></li>
+                    <li><a href="#timeline">Timeline</a></li>
+                    <li><a href="#checklist">Checklist</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-    <!-- MINIMAL LOGO -->
-    <div class="minimal-logo" id="logo">
-        <img src="https://nyc3.digitaloceanspaces.com/bhindi-drive/files/cab453ed-7d3e-4dfa-9012-038dbc50c1c5/2025-12-15T18-55-10-698Z-88cbe1d7-chat-image-1765824910680-0.jpg" alt="Devarsons" class="logo-img">
-    </div>
-
-    <!-- MOLECULAR NAVIGATION -->
-    <div class="molecular-nav" id="nav">
-        <div class="nav-molecule" data-target="heritage"><span class="nav-label">Heritage</span></div>
-        <div class="nav-molecule" data-target="philosophy"><span class="nav-label">Philosophy</span></div>
-        <div class="nav-molecule" data-target="industries"><span class="nav-label">Industries</span></div>
-        <div class="nav-molecule" data-target="contact"><span class="nav-label">Contact</span></div>
-    </div>
-
-    <!-- MAIN CONTENT -->
+    <!-- MAIN -->
     <main id="main">
-        <section class="molecular-section" id="heritage">
-            <div class="heritage-atom">
-                <div class="atom-year">1923</div>
-                <p class="atom-statement">
-                    We existed before trends.<br>
-                    We will exist after them.
+        <!-- HERO -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">Complete Healthcare Compliance in 6 Weeks</h1>
+                <p class="hero-subtitle">
+                    Comprehensive implementation roadmap covering DISHA Act, IT Act 2000, DPDP Act 2023, Drugs & Cosmetics Act, GST Act 2017, and Clinical Establishments Act
                 </p>
-                <p class="atom-emphasis">
-                    A century of molecular innovation.
-                </p>
+                <button class="cta-button">Start Implementation</button>
             </div>
         </section>
 
-        <section class="quote-molecule">
-            <div>
-                <p class="quote-text">
-                    Don't find customers for your products, find products for your customers.
-                </p>
-                <p class="quote-author">— Seth Godin</p>
-            </div>
-        </section>
-
-        <section class="content-molecule" id="philosophy">
-            <h2 class="molecule-title">Application-Based Innovation</h2>
+        <!-- ACTS -->
+        <section class="acts-section" id="acts">
+            <h2 class="section-title">Compliance Acts</h2>
             
-            <p class="molecule-text">
-                Established in 1923, the Devarsons group was established by the founding fathers as an <strong>application oriented manufacturer of dyes</strong>. The focus since inception was on being a <strong>"solution provider"</strong> rather than a dye supplier.
-            </p>
-            
-            <p class="molecule-text">
-                Manufacturing was established in 1960-70 with Solvent Yellow 14 and Solvent Red 24, targeting Cosmetic and Petroleum industries. Today, we're <strong>ISO 9001, ISO 14001 and OHSAS 18001</strong> accredited.
-            </p>
-            
-            <p class="molecule-text">
-                The emphasis within the organization is on <strong>developing new molecules or customizing current known molecules</strong> to meet highly specialized applications.
-            </p>
-        </section>
+            <div class="acts-grid">
+                <div class="act-card">
+                    <div class="act-icon">🏥</div>
+                    <h3 class="act-title">DISHA Act</h3>
+                    <ul class="act-items">
+                        <li>Data localization (India)</li>
+                        <li>Patient consent</li>
+                        <li>Encryption</li>
+                        <li>Audit trails</li>
+                        <li>Breach notification (72hrs)</li>
+                        <li>Patient rights</li>
+                    </ul>
+                </div>
 
-        <section class="quote-molecule">
-            <div>
-                <p class="quote-text">
-                    The secret of success is to do the common thing uncommonly well.
-                </p>
-                <p class="quote-author">— John D. Rockefeller Jr.</p>
-            </div>
-        </section>
+                <div class="act-card">
+                    <div class="act-icon">💻</div>
+                    <h3 class="act-title">IT Act 2000</h3>
+                    <ul class="act-items">
+                        <li>Reasonable security</li>
+                        <li>Sensitive data protection</li>
+                        <li>Data breach compensation</li>
+                        <li>Electronic records</li>
+                        <li>Digital signatures</li>
+                    </ul>
+                </div>
 
-        <section class="content-molecule" id="industries">
-            <h2 class="molecule-title">Industries We Transform</h2>
-            
-            <div class="industry-molecules">
-                <div class="industry-molecule">
-                    <span class="industry-icon">🧪</span>
-                    <div class="industry-name">Cosmetics</div>
-                    <div class="industry-desc">EU Cosmetics, US FDA, Schedule Q India compliant</div>
-                    <div class="industry-details">Hair oil, kumkum, lipstick, toilet soap, eye liner, nail polish, shampoo. Compliant with heavy metal analysis and microbial count regulations.</div>
+                <div class="act-card">
+                    <div class="act-icon">🔒</div>
+                    <h3 class="act-title">DPDP Act 2023</h3>
+                    <ul class="act-items">
+                        <li>Consent management</li>
+                        <li>Right to access</li>
+                        <li>Right to correction</li>
+                        <li>Right to erasure</li>
+                        <li>Data portability</li>
+                        <li>Grievance redressal</li>
+                    </ul>
                 </div>
-                
-                <div class="industry-molecule">
-                    <span class="industry-icon">⚗️</span>
-                    <div class="industry-name">Polymers</div>
-                    <div class="industry-desc">Master batch, PVC, engineering plastics</div>
-                    <div class="industry-details">High-performance PET, polyester fiber, EVA footwear with consistent quality.</div>
+
+                <div class="act-card">
+                    <div class="act-icon">💊</div>
+                    <h3 class="act-title">Drugs & Cosmetics Act</h3>
+                    <ul class="act-items">
+                        <li>Prescription regulations</li>
+                        <li>Schedule H/H1/X tracking</li>
+                        <li>Narcotic drug logging</li>
+                        <li>Doctor registration</li>
+                        <li>Prescription validity</li>
+                        <li>Generic name mandatory</li>
+                    </ul>
                 </div>
-                
-                <div class="industry-molecule">
-                    <span class="industry-icon">🛢️</span>
-                    <div class="industry-name">Petroleum</div>
-                    <div class="industry-desc">Engine oil, grease, coolant</div>
-                    <div class="industry-details">First Blue Liquid Dye for kerosene in India (1992, IOCL). Superior thermal stability.</div>
+
+                <div class="act-card">
+                    <div class="act-icon">📊</div>
+                    <h3 class="act-title">GST Act 2017</h3>
+                    <ul class="act-items">
+                        <li>18% GST on services</li>
+                        <li>GSTIN on invoices</li>
+                        <li>Sequential numbering</li>
+                        <li>HSN/SAC codes</li>
+                        <li>Tax invoice format</li>
+                        <li>E-invoicing ready</li>
+                    </ul>
                 </div>
-                
-                <div class="industry-molecule">
-                    <span class="industry-icon">🔬</span>
-                    <div class="industry-name">NDT</div>
-                    <div class="industry-desc">Non-Destructive Testing</div>
-                    <div class="industry-details">Custom molecular development for aerospace and automotive applications.</div>
-                </div>
-                
-                <div class="industry-molecule">
-                    <span class="industry-icon">💊</span>
-                    <div class="industry-name">Medical</div>
-                    <div class="industry-desc">Pharmaceutical-grade colorants</div>
-                    <div class="industry-details">USP/EP grade materials with strict regulatory compliance.</div>
-                </div>
-                
-                <div class="industry-molecule">
-                    <span class="industry-icon">🧵</span>
-                    <div class="industry-name">Textiles</div>
-                    <div class="industry-desc">High-end VAT dyes</div>
-                    <div class="industry-details">Superior wash and light fastness for premium applications.</div>
-                </div>
-                
-                <div class="industry-molecule">
-                    <span class="industry-icon">🌾</span>
-                    <div class="industry-name">Agriculture</div>
-                    <div class="industry-desc">Seeds, pesticides, fertilizers</div>
-                    <div class="industry-details">Environmentally safe, biodegradable formulations.</div>
-                </div>
-                
-                <div class="industry-molecule">
-                    <span class="industry-icon">🖨️</span>
-                    <div class="industry-name">Inks</div>
-                    <div class="industry-desc">Printing ink, varnish, paint</div>
-                    <div class="industry-details">Fluorescent colorants with superior gloss and transparency.</div>
+
+                <div class="act-card">
+                    <div class="act-icon">🏛️</div>
+                    <h3 class="act-title">Clinical Establishments Act</h3>
+                    <ul class="act-items">
+                        <li>Clinic registration</li>
+                        <li>Doctor qualification</li>
+                        <li>Medical records (10yrs)</li>
+                        <li>Patient complaints</li>
+                        <li>Quality standards</li>
+                    </ul>
                 </div>
             </div>
         </section>
 
-        <section class="quote-molecule">
-            <div>
-                <p class="quote-text">
-                    There is only one boss. The customer.
-                </p>
-                <p class="quote-author">— Sam Walton</p>
+        <!-- TIMELINE -->
+        <section class="timeline-section" id="timeline">
+            <h2 class="section-title">6-Week Implementation Timeline</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3 class="week-title">Week 1: Data Protection & Security</h3>
+                        <p class="week-desc">RBAC, Encryption, Audit Logging, Session Management</p>
+                    </div>
+                    <div></div>
+                </div>
+
+                <div class="timeline-item">
+                    <div></div>
+                    <div class="timeline-content">
+                        <h3 class="week-title">Week 2: Patient Consent & Rights</h3>
+                        <p class="week-desc">Consent Management, Data Access, Correction, Erasure, Portability</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3 class="week-title">Week 3: Prescription Compliance</h3>
+                        <p class="week-desc">Schedule H/H1/X Tracking, Digital Signature, Drug Interactions</p>
+                    </div>
+                    <div></div>
+                </div>
+
+                <div class="timeline-item">
+                    <div></div>
+                    <div class="timeline-content">
+                        <h3 class="week-title">Week 4: GST & Billing Compliance</h3>
+                        <p class="week-desc">GST Calculation, Invoice Format, GSTIN, HSN/SAC Codes</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3 class="week-title">Week 5: Security & Breach Response</h3>
+                        <p class="week-desc">Breach Detection, Notification System, Security Audits</p>
+                    </div>
+                    <div></div>
+                </div>
+
+                <div class="timeline-item">
+                    <div></div>
+                    <div class="timeline-content">
+                        <h3 class="week-title">Week 6: Testing & Documentation</h3>
+                        <p class="week-desc">Compliance Testing, Legal Documentation, Privacy Policy</p>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <section class="cta-molecule" id="contact">
-            <div>
-                <h2 class="cta-title">PARTNER WITH<br>EXCELLENCE</h2>
-                <p class="cta-text">
-                    Discover how our century of expertise can solve your colorant challenges.
+        <!-- CTA -->
+        <section class="hero" id="contact">
+            <div class="hero-content">
+                <h2 class="hero-title">Ready to Get Compliant?</h2>
+                <p class="hero-subtitle">
+                    Start your 6-week implementation journey today
                 </p>
-                <button class="btn-molecule">Request Consultation</button>
+                <button class="cta-button">Get Started Now</button>
             </div>
         </section>
     </main>
 
     <footer>
-        <img src="https://nyc3.digitaloceanspaces.com/bhindi-drive/files/cab453ed-7d3e-4dfa-9012-038dbc50c1c5/2025-12-15T18-55-10-698Z-88cbe1d7-chat-image-1765824910680-0.jpg" alt="Devarsons" style="height: 80px; margin-bottom: 2.5rem; filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.5));">
-        <p style="color: rgba(255,255,255,0.7); font-size: 1.1rem;">&copy; 2025 Devarsons Industries Private Limited</p>
-        <p style="color: var(--gold); margin-top: 1.2rem; font-size: 1.3rem; font-weight: 700; text-shadow: 0 0 30px rgba(212, 175, 55, 0.6);">Since 1923 | The Colour Solution Company</p>
+        <p>&copy; 2025 India Healthcare Compliance. All rights reserved.</p>
     </footer>
 
     <script>
-// WEBGL SHADER INTRO
+// WEBGL INTRO
 let scene, camera, renderer, particles, animationId;
 
 function initWebGL() {
@@ -827,36 +647,34 @@ function initWebGL() {
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.z = 50;
     
-    renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
+    renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0x000000);
+    renderer.setClearColor(0x0A0E27);
     
-    // Create particle system
+    // Particle system
     const particleCount = 3000;
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
-    const sizes = new Float32Array(particleCount);
     
-    const goldColor = new THREE.Color(0xD4AF37);
-    const whiteColor = new THREE.Color(0xFFFFFF);
+    const color1 = new THREE.Color(0xFF6B35);
+    const color2 = new THREE.Color(0x4ECDC4);
+    const color3 = new THREE.Color(0xFFE66D);
     
     for (let i = 0; i < particleCount; i++) {
         positions[i * 3] = (Math.random() - 0.5) * 100;
         positions[i * 3 + 1] = (Math.random() - 0.5) * 100;
         positions[i * 3 + 2] = (Math.random() - 0.5) * 100;
         
-        const color = Math.random() > 0.7 ? goldColor : whiteColor;
+        const rand = Math.random();
+        const color = rand < 0.33 ? color1 : rand < 0.66 ? color2 : color3;
         colors[i * 3] = color.r;
         colors[i * 3 + 1] = color.g;
         colors[i * 3 + 2] = color.b;
-        
-        sizes[i] = Math.random() * 3 + 1;
     }
     
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-    geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
     
     const material = new THREE.PointsMaterial({
         size: 2,
@@ -869,14 +687,6 @@ function initWebGL() {
     particles = new THREE.Points(geometry, material);
     scene.add(particles);
     
-    // Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-    scene.add(ambientLight);
-    
-    const pointLight = new THREE.PointLight(0xD4AF37, 3, 100);
-    pointLight.position.set(0, 0, 30);
-    scene.add(pointLight);
-    
     animateWebGL();
 }
 
@@ -885,11 +695,9 @@ function animateWebGL() {
     
     const time = Date.now() * 0.0005;
     
-    // Rotate particles
     particles.rotation.x = time * 0.2;
     particles.rotation.y = time * 0.3;
     
-    // Pulse effect
     const positions = particles.geometry.attributes.position.array;
     for (let i = 0; i < positions.length; i += 3) {
         const distance = Math.sqrt(
@@ -902,7 +710,6 @@ function animateWebGL() {
     }
     particles.geometry.attributes.position.needsUpdate = true;
     
-    // Camera movement
     camera.position.x = Math.sin(time * 0.5) * 10;
     camera.position.y = Math.cos(time * 0.3) * 10;
     camera.lookAt(scene.position);
@@ -915,23 +722,15 @@ window.addEventListener('load', () => {
     const body = document.body;
     const canvas = document.getElementById('webgl-canvas');
     const overlay = document.getElementById('overlay');
-    const molecularCore = document.getElementById('molecular-core');
-    const centralAtom = document.getElementById('central-atom');
-    const logo = document.getElementById('logo');
-    const nav = document.getElementById('nav');
+    const header = document.getElementById('header');
     const main = document.getElementById('main');
-    const brandReveal = document.querySelector('.intro-brand-webgl');
+    const brand = document.querySelector('.intro-brand');
     
-    // Start WebGL
     initWebGL();
-    
-    // Lock scroll
     body.classList.add('intro-locked');
     
-    // Brand reveal
-    setTimeout(() => brandReveal.classList.add('active'), 6500);
+    setTimeout(() => brand.classList.add('active'), 6500);
     
-    // Exit intro after 11 seconds
     setTimeout(() => {
         canvas.classList.add('exiting');
         overlay.classList.add('exiting');
@@ -942,47 +741,12 @@ window.addEventListener('load', () => {
             overlay.style.display = 'none';
             
             body.classList.remove('intro-locked');
-            molecularCore.classList.add('active');
-            centralAtom.classList.add('visible');
-            logo.classList.add('visible');
-            nav.classList.add('visible');
+            header.classList.add('visible');
             main.classList.add('visible');
         }, 2500);
     }, 11000);
 });
 
-// NAVIGATION
-const navMolecules = document.querySelectorAll('.nav-molecule');
-navMolecules.forEach(molecule => {
-    molecule.addEventListener('click', () => {
-        const target = molecule.getAttribute('data-target');
-        document.getElementById(target).scrollIntoView({ behavior: 'smooth' });
-        
-        navMolecules.forEach(m => m.classList.remove('active'));
-        molecule.classList.add('active');
-    });
-});
-
-// Update nav on scroll
-const sections = document.querySelectorAll('section[id]');
-window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        if (window.pageYOffset >= sectionTop - 300) {
-            current = section.getAttribute('id');
-        }
-    });
-    
-    navMolecules.forEach(molecule => {
-        molecule.classList.remove('active');
-        if (molecule.getAttribute('data-target') === current) {
-            molecule.classList.add('active');
-        }
-    });
-});
-
-// Resize handler
 window.addEventListener('resize', () => {
     if (camera && renderer) {
         camera.aspect = window.innerWidth / window.innerHeight;
